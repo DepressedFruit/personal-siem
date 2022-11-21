@@ -1,0 +1,6 @@
+node_modules/
+build/
+logs/
+src/watchers/*
+!src/watchers/log-files/
+!src/watchers/windows-event-logger

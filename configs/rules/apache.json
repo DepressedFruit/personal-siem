@@ -1,0 +1,19 @@
+{
+    "group": {
+        "id": 6,
+        "name": "Apache",
+        "dateMatch": "^\\[(\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+)\\]"
+    },
+    "decoders": [
+        {
+            "id": 601,
+            "name": "Apache Client Alert",
+            "description": "Apache: %type% for %source% on %message%",
+            "level": 1,
+            "decoder": {
+                "regex": "\\[(\\S+)\\] \\[client (.*)\\] (.*)",
+                "variables": "type,source,message"
+            }
+        }
+    ]
+}

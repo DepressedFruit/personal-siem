@@ -1,0 +1,28 @@
+{
+    "group": {
+        "id": 0,
+        "name": "Test Events"
+    },
+    "decoders": [
+        {
+            "id": 3,
+            "name": "Test Event ViewerDecoder",
+            "description": "DNS Resolution Error on %program%.",
+            "level": 1,
+            "decoder": {
+                "regex": "NtpClient was unable to set a manual peer to use as a time source because of DNS resolution error on '(.*?)'. NtpClient will try again in 15 minutes and double the reattempt interval thereafter. The error was: (/s)",
+                "variables": "program"
+            }
+        },
+        {
+            "id": 4,
+            "name": "Example Reaction",
+            "description": "Reaction Event %type%",
+            "level": 1,
+            "decoder": {
+                "regex": "\\[(ERROR|WARNING|INFO)\\][ ](.*)",
+                "variables": "type,log"
+            }
+        }
+    ]
+}

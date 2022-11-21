@@ -1,0 +1,26 @@
+[
+    {
+        "name": "reactions-log",
+        "enabled": true,
+        "watcher": "log-files",
+        "options": {
+            "file": "./logs/reactions.log"
+        }
+    },
+    {
+        "name": "syslog",
+        "enabled": false,
+        "watcher": "log-files",
+        "options": {
+            "file": "/var/log/syslog"
+        }
+    },
+    {
+        "name": "auth",
+        "enabled": false,
+        "watcher": "log-files",
+        "options": {
+            "file": "/var/log/auth.log"
+        }
+    }
+]

@@ -1,0 +1,18 @@
+{
+    "group": {
+        "id": 5,
+        "name": "NGINX"
+    },
+    "decoders": [
+        {
+            "id": 500,
+            "name": "NGINX: Error Log",
+            "description": "NGINX Error",
+            "level": 1,
+            "decoder": {
+                "regex": "ip=(.*)&server=(.*)&uri=(.*)&learning=(\\d+)&vers=(.*)&total_processed=(\\d+)&total_blocked=(\\d+)&block=(\\d+)&cscore0=(.*)(.*)&score0=(.*)&",
+                "variables": "sourceip,server,uri,learning,vers,total_processed,total_blocked,cscore,score"
+            }
+        }
+    ]
+}
