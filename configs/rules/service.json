@@ -1,0 +1,18 @@
+{
+    "group": {
+        "id": 2,
+        "name": "Dbus-daemon"
+    },
+    "decoders": [
+        {
+            "id": 200,
+            "name": "Dbus-daemon: Activating service.",
+            "description": "Activating Service: %service_name%",
+            "level": 1,
+            "decoder": {
+                "regex": "(.*) dbus-daemon\\[([0-9]+)\\]: \\[session uid=(\\d+) pid=(\\d+)\\] Activating service name='(.*)' requested by '(.*)' \\((.*)\\)",
+                "variables": "host,id,uid,pid,service_name,by,compressed"
+            }
+        }
+    ]
+}

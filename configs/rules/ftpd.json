@@ -1,0 +1,28 @@
+{
+    "group": {
+        "id": 3,
+        "description": "FTP Rules"
+    },
+    "decoders": [
+        {
+            "id": 300,
+            "name": "ftpd: Login Failed",
+            "description": "%module% login for %user% failed from %source%",
+            "level": 1,
+            "decoder": {
+                "regex": "(.*) (ftpd|in.ftpd)\\[\\d+\\]: login (.*) from (.*) failed.",
+                "variables": "hostname,module,user,source"
+            }
+        },
+        {
+            "id": 301,
+            "name": "ftpd: Refused Connection",
+            "description": "%module% refused connection from %source_ip%",
+            "level": 1,
+            "decoder": {
+                "regex": "(.*) (ftpd|in.ftpd)\\[\\d+\\]: refused connect from (.*)",
+                "variables": "hostname,module,source_ip"
+            }
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Send-To-Slack",
+        "action": "slack",
+        "enabled": false,
+        "level": 1,
+        "options": {
+            "url": "https://hooks.slack.com/services/<code>"
+        }
+    },
+    {
+        "name": "Send-To-ntfy",
+        "action": "ntfy",
+        "enabled": false,
+        "level": 1,
+        "options": {
+            "url": "https://ntfy.sh",
+            "topic": "personal-siem-alerts"
+        }
+    }
+]
