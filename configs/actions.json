@@ -7,15 +7,5 @@
         "options": {
             "url": "https://hooks.slack.com/services/<code>"
         }
-    },
-    {
-        "name": "Send-To-ntfy",
-        "action": "ntfy",
-        "enabled": true,
-        "level": 1,
-        "options": {
-            "url": "https://ntfy.sh",
-            "topic": "psiem-alerts"
-        }
     }
 ]
