@@ -63,7 +63,7 @@ Example:
 		"name": "Apache",
 		"dateMatch": "^\\[(\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+)\\]"
 	},
-	"decoders": [
+	"rules": [
 		{
 			"id": 601,
 			"name": "Apache Client Alert",

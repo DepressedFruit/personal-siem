@@ -27,11 +27,6 @@ export default async function(): Promise<void> {
                 logger: LOGGER,
                 options: module.options,
                 next: async (props: DecoderNextProps): Promise<void> => {
-                    /* const decode: actionProps = await decoder({
-                        rules: RULES,
-                        logger: LOGGER,
-                        ...props,
-                    }); */
 
                     const { description, data } = props;
                     const decode: DecodedGroup[] = await DECODER.decode(description);

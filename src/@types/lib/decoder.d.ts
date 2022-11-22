@@ -10,10 +10,10 @@ export interface DecoderNextProps {
 }
 export interface DecoderRules {
     group: Group,
-    decoders: Decoder[],
+    rules: Rule[],
 };
 
-export interface Decoder {
+export interface Rule {
     id: number,
     name: string,
     description: string,

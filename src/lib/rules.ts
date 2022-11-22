@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from 'dayjs';
 
 import { listDirectory, read } from './file';
 
-import { Decoded, Decoder, DecoderRules } from '../@types/lib/decoder';
+import { Decoded, Rule, DecoderRules } from '../@types/lib/decoder';
 
 export async function getRules(): Promise<DecoderRules[]> {
     const rulesDirectory: string = join(
@@ -40,20 +40,20 @@ export async function getRules(): Promise<DecoderRules[]> {
 
 export function checkRules(group: DecoderRules, log: string): Decoded[] {
     let parsed: Decoded[] = [];
-    const { decoders } = group;
+    const { rules } = group;
 
-    decoders.forEach((decoder: Decoder) => {
-        const { regex:decoderRegex, variables } = decoder.decoder;
+    rules.forEach((rule: Rule) => {
+        const { regex:decoderRegex, variables } = rule.decoder;
         const allVariables = variables?.split(',');
 
         const regex: RegExp = new RegExp(decoderRegex);
         const parseRegex: RegExpExecArray | null = regex.exec(log);
         if(parseRegex) {
             const variableAssociates: any = {
-                id: decoder.id,
-                name: decoder.name,
-                description: decoder.description,
-                level: decoder.level,
+                id: rule.id,
+                name: rule.name,
+                description: rule.description,
+                level: rule.level,
                 decoded: {},
             };
 

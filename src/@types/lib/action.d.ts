@@ -26,7 +26,7 @@ export interface ActionProps {
 export interface ProcessActionProps {
     action: ActionObj,
     hostname: string,
-    full_log,
+    full_log: string,
     origin: Object | string,
     group: DecodedGroup,
     logger: LoggingFunction,

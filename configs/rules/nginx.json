@@ -3,7 +3,7 @@
         "id": 5,
         "name": "NGINX"
     },
-    "decoders": [
+    "rules": [
         {
             "id": 500,
             "name": "NGINX: Error Log",
