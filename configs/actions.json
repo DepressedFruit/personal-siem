@@ -11,11 +11,11 @@
     {
         "name": "Send-To-ntfy",
         "action": "ntfy",
-        "enabled": false,
+        "enabled": true,
         "level": 1,
         "options": {
             "url": "https://ntfy.sh",
-            "topic": "personal-siem-alerts"
+            "topic": "psiem-alerts"
         }
     }
 ]

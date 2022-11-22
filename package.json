@@ -1,6 +1,6 @@
 {
   "name": "personal-siem",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A project for a personal and simple to configure SIEM.",
   "main": "siem/index.js",
   "scripts": {

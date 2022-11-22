@@ -3,7 +3,7 @@
         "id": 3,
         "description": "FTP Rules"
     },
-    "decoders": [
+    "rules": [
         {
             "id": 300,
             "name": "ftpd: Login Failed",

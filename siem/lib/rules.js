@@ -36,18 +36,18 @@ function getRules() {
 exports.getRules = getRules;
 function checkRules(group, log) {
     let parsed = [];
-    const { decoders } = group;
-    decoders.forEach((decoder) => {
-        const { regex: decoderRegex, variables } = decoder.decoder;
+    const { rules } = group;
+    rules.forEach((rule) => {
+        const { regex: decoderRegex, variables } = rule.decoder;
         const allVariables = variables === null || variables === void 0 ? void 0 : variables.split(',');
         const regex = new RegExp(decoderRegex);
         const parseRegex = regex.exec(log);
         if (parseRegex) {
             const variableAssociates = {
-                id: decoder.id,
-                name: decoder.name,
-                description: decoder.description,
-                level: decoder.level,
+                id: rule.id,
+                name: rule.name,
+                description: rule.description,
+                level: rule.level,
                 decoded: {},
             };
             allVariables === null || allVariables === void 0 ? void 0 : allVariables.forEach((variable, index) => {

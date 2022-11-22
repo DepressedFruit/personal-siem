@@ -55,11 +55,6 @@ function default_1() {
                     logger: LOGGER,
                     options: module.options,
                     next: (props) => __awaiter(this, void 0, void 0, function* () {
-                        /* const decode: actionProps = await decoder({
-                            rules: RULES,
-                            logger: LOGGER,
-                            ...props,
-                        }); */
                         const { description, data } = props;
                         const decode = yield DECODER.decode(description);
                         if (decode.length > 0) {

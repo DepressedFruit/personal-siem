@@ -3,7 +3,7 @@
         "id": 2,
         "name": "Dbus-daemon"
     },
-    "decoders": [
+    "rules": [
         {
             "id": 200,
             "name": "Dbus-daemon: Activating service.",
