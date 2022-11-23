@@ -23,8 +23,9 @@ export default async function(): Promise<void> {
 
     WATCHERS_CONFIG.forEach(async (module: WatchersConfig): Promise<void> => {
         if(module.enabled) {
+            const WATCHER_LOGGER: LoggingFunction = await logger('watchers', `Watcher: ${module.name}`);
             const props: WatcherPluginProps = {
-                logger: LOGGER,
+                logger: WATCHER_LOGGER,
                 options: module.options,
                 next: async (props: DecoderNextProps): Promise<void> => {
 
@@ -37,7 +38,6 @@ export default async function(): Promise<void> {
                             full_log: description,
                             origin: data,
                             groups: decode,
-                            logger: LOGGER,
                         }
 
                         await ACTIONS(actionProps);
