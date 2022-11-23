@@ -117,7 +117,7 @@ Custom Action scripts are placed in the `src/actions` folder. For example, for a
 
 Starting boilerplate for the script:
 ```typescript
-import { ActionPluginProps } from "../../@types/lib/action";
+import { ActionPluginProps } from '../../@types/lib/action';
 
 export default async function({
     action,
@@ -141,4 +141,6 @@ Add the custom actions script into the config JSON `configs/actions.json`.
 - `level` will only trigger the action when the decoder parses the appropriate level or above.
 
 ## Maintainers
-Currently, the sole maintainer is just me. More are welcome and I am happy to receive some help.
+More are welcome and I am happy to receive some help.
+
+- [jtPox](https://github.com/jtpox)
