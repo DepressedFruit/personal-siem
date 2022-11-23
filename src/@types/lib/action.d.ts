@@ -19,8 +19,7 @@ export interface ActionProps {
     hostname: string,
     full_log: string,
     origin: Object | string
-    groups: DecodedGroups[]
-    logger: LoggingFunction,
+    groups: DecodedGroups[],
 };
 
 export interface ProcessActionProps {

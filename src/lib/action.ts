@@ -1,9 +1,11 @@
 import { join } from 'path';
 
 import { read } from './file';
+import logger from './logging';
 
 import { Action, ActionObj, ActionPluginProps, ActionProps, ProcessActionProps } from "../@types/lib/action";
 import { Decoded, DecodedGroup } from '../@types/lib/decoder';
+import { LoggingFunction } from '../@types/lib/logging';
 
 let actions: ActionObj[] = [];
 
@@ -43,17 +45,17 @@ export async function action(): Promise<Function> {
             full_log,
             origin,
             groups,
-            logger,
         } = actionProps;
 
         actions.forEach(async (actionObj: ActionObj) => {
+            const ACTION_LOGGER: LoggingFunction = await logger('actions', `Action: ${actionObj.action.name}`)
             groups.forEach(async (group: DecodedGroup) => {
                 const processActionProps: ProcessActionProps = {
                     action: actionObj,
                     hostname,
                     full_log,
                     origin,
-                    logger,
+                    logger: ACTION_LOGGER,
                     group,
                 };
 
