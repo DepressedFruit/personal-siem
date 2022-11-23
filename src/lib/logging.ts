@@ -7,15 +7,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { ConfigMode } from '../@types/lib/config';
 import { LoggingFunction, LoggingType } from '../@types/lib/logging';
 
-const INFO = console.info;
-const DEBUG = console.debug;
-const WARN = console.warn;
-const ERROR = console.error;
-
-export default async function(
-    mode: string,
-    prefix: string | null = null,
-): Promise<LoggingFunction> {
+export default async function(mode: ConfigMode): Promise<LoggingFunction> {
     try {
         const LOG_DIR = join(
             __dirname,
@@ -32,43 +24,43 @@ export default async function(
             `${mode}.log`,
         );
 
-        if(!existsSync(LOG_DIR)) mkdirSync(LOG_DIR);
+        if(!existsSync(LOG_DIR)) {
+            mkdirSync(LOG_DIR);
+        }
 
-        if(!existsSync(LOG_FILE)) writeFile(LOG_FILE, 'LOG FILE CREATED', { flag: 'wx' }, () => {});
+        if(!existsSync(LOG_FILE)) {
+            // Create file.
+            writeFile(LOG_FILE, 'LOG FILE CREATED\n', { flag: 'wx' }, () => {});
+        }
 
-        async function appendToLog(type: LoggingType, log: string): Promise<string> {
+        async function appendToLog(type: LoggingType, log: string): Promise<void> {
             const currentDateTime: Dayjs = dayjs();
-
-            let fullLog: string = `${currentDateTime.format('MM/DD/YYYY HH:mm:ss')} [${type.toUpperCase()}]`;
-            if(prefix) fullLog += ` [${prefix}]`;
-            fullLog += ` ${log}`;
-
-            await appendFile(LOG_FILE, `\n${fullLog}`);
-            return fullLog;
+            const fullLog: string = `${currentDateTime.format('MM/DD/YYYY HH:mm:ss')} [${type.toUpperCase()}] ${log}`;
+            await appendFile(LOG_FILE, `${fullLog}\n`);
+            console.log(fullLog);
         }
 
         return {
             info: (log: string): void => {
-                appendToLog('info', log).then(fullLog => INFO(fullLog));
+                appendToLog('info', log).then(() => {});
             },
             debug: (log: string): void => {
-                appendToLog('debug', log).then(fullLog => DEBUG(fullLog));
+                appendToLog('debug', log).then(() => {});
             },
-            warn: (log: string): void => {
-                appendToLog('warning', log).then(fullLog => WARN(fullLog));
+            warning: (log: string): void => {
+                appendToLog('warning', log).then(() => {});
             },
             error: (log: string): void => {
-                appendToLog('error', log).then(fullLog => ERROR(fullLog));
+                appendToLog('error', log).then(() => {});
             },
         };
     } catch(err) {
-        const currentDateTime: Dayjs = dayjs();
-        ERROR(`${err}`);
+        console.error(`${err}`);
         return {
-            info: (log: string): void => INFO(`${currentDateTime.format('MM/DD/YYYY HH:mm:ss')} [INFO] ${log}`),
-            debug: (log: string): void => DEBUG(`${currentDateTime.format('MM/DD/YYYY HH:mm:ss')} [DEBUG] ${log}`),
-            warn: (log: string): void => WARN(`${currentDateTime.format('MM/DD/YYYY HH:mm:ss')} [WARNING] ${log}`),
-            error: (log: string): void => ERROR(`${currentDateTime.format('MM/DD/YYYY HH:mm:ss')} [ERROR] ${log}`),
+            info: (log: string): void => {},
+            debug: (log: string): void => {},
+            warning: (log: string): void => {},
+            error: (log: string): void => {},
         };
     }
 }
