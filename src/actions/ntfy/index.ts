@@ -31,6 +31,6 @@ export default async function({
 
         const requestJson = await request.json();
     } catch (err) {
-        logger.error(`[ntfy] ${err}`)
+        logger.error(`${err}`)
     }
 }

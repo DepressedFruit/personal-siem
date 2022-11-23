@@ -69,6 +69,6 @@ export default async function({
             }
         });
     } catch(err) {
-        logger.error(`log-files ${err}`);
+        logger.error(`${err}`);
     }
 };
