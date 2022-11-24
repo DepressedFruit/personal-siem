@@ -13,7 +13,7 @@ export interface Action {
 
 export interface ActionObj {
     action: Action,
-    call: Function,
+    call: (ActionPluginProps) => Promise<void>,
 }
 export interface ActionProps {
     hostname: string,
