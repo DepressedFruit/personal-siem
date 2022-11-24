@@ -39,7 +39,7 @@ export default async function({
     };
 
     client.sendMail(mailOptions, (err, info: SMTPTransport.SentMessageInfo) => {
-        if(err) logger.error(`[Mail] ${err}`);
+        if(err) logger.error(`${err}`);
     });
 }
 

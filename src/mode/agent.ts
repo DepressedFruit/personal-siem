@@ -2,7 +2,7 @@ import { hostname } from 'os';
 
 import { WatchersConfig } from '../@types/lib/config';
 import { LoggingFunction } from '../@types/lib/logging';
-import { WatcherPluginProps } from '../@types/watchers/watcher';
+import { WatcherPlugin, WatcherPluginProps } from '../@types/watchers/watcher';
 import { Decoded, DecodedGroup, DecoderNextProps, DecoderRules } from '../@types/lib/decoder';
 import { ActionProps } from '../@types/lib/action';
 
@@ -23,8 +23,9 @@ export default async function(): Promise<void> {
 
     WATCHERS_CONFIG.forEach(async (module: WatchersConfig): Promise<void> => {
         if(module.enabled) {
+            const WATCHER_LOGGER: LoggingFunction = await logger('watchers', `Watcher: ${module.name}`);
             const props: WatcherPluginProps = {
-                logger: LOGGER,
+                logger: WATCHER_LOGGER,
                 options: module.options,
                 next: async (props: DecoderNextProps): Promise<void> => {
 
@@ -37,7 +38,6 @@ export default async function(): Promise<void> {
                             full_log: description,
                             origin: data,
                             groups: decode,
-                            logger: LOGGER,
                         }
 
                         await ACTIONS(actionProps);
@@ -46,7 +46,7 @@ export default async function(): Promise<void> {
             };
     
             try {
-                const WATCHER_MAIN = await import(`../watchers/${module.watcher}`);
+                const WATCHER_MAIN: WatcherPlugin = await import(`../watchers/${module.watcher}`);
                 
                 LOGGER.info(`Starting Watcher [${module.watcher}] for [${module.name}]`);
                 await WATCHER_MAIN.default(props);

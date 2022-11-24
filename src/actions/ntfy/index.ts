@@ -16,9 +16,9 @@ export default async function({
     let headers: RequestInit['headers'] = {};
     if(auth) {
         const authBuffer: Buffer = Buffer.from(`${auth.user}:${auth.password}`);
-        const base64Auth = authBuffer.toString('base64');
+        const base64Auth: string = authBuffer.toString('base64');
         headers = {
-            'Authorizaton': `Basic ${base64Auth}`
+            'Authorizaton': `Basic ${base64Auth}`,
         };
     }
 
@@ -31,6 +31,6 @@ export default async function({
 
         const requestJson = await request.json();
     } catch (err) {
-        logger.error(`[ntfy] ${err}`)
+        logger.error(`${err}`);
     }
 }

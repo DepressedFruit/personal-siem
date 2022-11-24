@@ -21,7 +21,7 @@ async function countFileLines(file: string): Promise<number> {
             for(i = 0; i < chunk.length; i++) {
                 if('\n'.charCodeAt(0) === chunk[i]) count++;
             }
-        }).on('end', () => resolve(count + 1));
+        }).on('end', () => resolve(count));
     });
 }
 
@@ -69,6 +69,6 @@ export default async function({
             }
         });
     } catch(err) {
-        logger.error(`log-files ${err}`);
+        logger.error(`${err}`);
     }
 };
