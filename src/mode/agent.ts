@@ -2,7 +2,7 @@ import { hostname } from 'os';
 
 import { WatchersConfig } from '../@types/lib/config';
 import { LoggingFunction } from '../@types/lib/logging';
-import { WatcherPluginProps } from '../@types/watchers/watcher';
+import { WatcherPlugin, WatcherPluginProps } from '../@types/watchers/watcher';
 import { Decoded, DecodedGroup, DecoderNextProps, DecoderRules } from '../@types/lib/decoder';
 import { ActionProps } from '../@types/lib/action';
 
@@ -46,7 +46,7 @@ export default async function(): Promise<void> {
             };
     
             try {
-                const WATCHER_MAIN = await import(`../watchers/${module.watcher}`);
+                const WATCHER_MAIN: WatcherPlugin = await import(`../watchers/${module.watcher}`);
                 
                 LOGGER.info(`Starting Watcher [${module.watcher}] for [${module.name}]`);
                 await WATCHER_MAIN.default(props);
