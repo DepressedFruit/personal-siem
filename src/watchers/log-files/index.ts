@@ -1,5 +1,5 @@
 import { exec } from 'child_process';
-import { createReadStream, fstat, watch } from 'fs';
+import { createReadStream, fstat, watch, existsSync } from 'fs';
 // import { watch } from 'fs/promises';
 import readline from 'readline';
 
@@ -35,6 +35,8 @@ export default async function({
 }: LogFilePluginProps): Promise<void> {
     const { file } = options;
     try {
+        if(!existsSync(file)) throw new Error(`${file} does not exist.`);
+
         let currentLines: number = await countFileLines(file);
         let timeoutDebounce: ReturnType<typeof setTimeout> | null;
         watch(file, (event): void => {
