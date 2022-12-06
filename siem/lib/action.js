@@ -31,10 +31,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.action = void 0;
 const path_1 = require("path");
 const file_1 = require("./file");
+const logging_1 = __importDefault(require("./logging"));
 let actions = [];
 function getActions() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -60,15 +64,16 @@ function action() {
     return __awaiter(this, void 0, void 0, function* () {
         actions = yield getActions();
         return (actionProps) => __awaiter(this, void 0, void 0, function* () {
-            const { hostname, full_log, origin, groups, logger, } = actionProps;
+            const { hostname, full_log, origin, groups, } = actionProps;
             actions.forEach((actionObj) => __awaiter(this, void 0, void 0, function* () {
+                const ACTION_LOGGER = yield (0, logging_1.default)('actions', `Action: ${actionObj.action.name}`);
                 groups.forEach((group) => __awaiter(this, void 0, void 0, function* () {
                     const processActionProps = {
                         action: actionObj,
                         hostname,
                         full_log,
                         origin,
-                        logger,
+                        logger: ACTION_LOGGER,
                         group,
                     };
                     yield processAction(processActionProps);

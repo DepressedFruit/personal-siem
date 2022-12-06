@@ -36,7 +36,7 @@ function default_1({ hostname, action, decoded, group, logger, }) {
         };
         client.sendMail(mailOptions, (err, info) => {
             if (err)
-                logger.error(`[Mail] ${err}`);
+                logger.error(`${err}`);
         });
     });
 }

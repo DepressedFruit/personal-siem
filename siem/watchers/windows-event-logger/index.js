@@ -43,11 +43,11 @@ function default_1({ logger, options, next, }) {
             (0, child_process_1.exec)(powershellCommand.join(' '), { 'shell': 'powershell.exe' }, (error, stdout, stderr) => {
                 var _a, _b;
                 if (error) {
-                    logger.error(`windows-event-logger exec error: ${error}`);
+                    logger.error(`exec error: ${error}`);
                     return;
                 }
                 if (stderr) {
-                    logger.error(`windows-event-logger exec stderr: ${stderr}`);
+                    logger.error(`exec stderr: ${stderr}`);
                     return;
                 }
                 if (stdout

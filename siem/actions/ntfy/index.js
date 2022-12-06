@@ -18,7 +18,7 @@ function default_1({ hostname, action, decoded, logger, }) {
             const authBuffer = Buffer.from(`${auth.user}:${auth.password}`);
             const base64Auth = authBuffer.toString('base64');
             headers = {
-                'Authorizaton': `Basic ${base64Auth}`
+                'Authorizaton': `Basic ${base64Auth}`,
             };
         }
         try {
@@ -30,7 +30,7 @@ function default_1({ hostname, action, decoded, logger, }) {
             const requestJson = yield request.json();
         }
         catch (err) {
-            logger.error(`[ntfy] ${err}`);
+            logger.error(`${err}`);
         }
     });
 }

@@ -29,7 +29,7 @@ function countFileLines(file) {
                     if ('\n'.charCodeAt(0) === chunk[i])
                         count++;
                 }
-            }).on('end', () => resolve(count + 1));
+            }).on('end', () => resolve(count));
         });
     });
 }
@@ -40,6 +40,8 @@ function default_1({ logger, options, next, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const { file } = options;
         try {
+            if (!(0, fs_1.existsSync)(file))
+                throw new Error(`${file} does not exist.`);
             let currentLines = yield countFileLines(file);
             let timeoutDebounce;
             (0, fs_1.watch)(file, (event) => {
@@ -71,7 +73,7 @@ function default_1({ logger, options, next, }) {
             });
         }
         catch (err) {
-            logger.error(`log-files ${err}`);
+            logger.error(`${err}`);
         }
     });
 }

@@ -42,43 +42,48 @@ const decoder_1 = require("../lib/decoder");
 const action_1 = require("../lib/action");
 function default_1() {
     return __awaiter(this, void 0, void 0, function* () {
-        const WATCHERS_CONFIG = yield (0, config_1.readConfig)('watchers');
         const LOGGER = yield (0, logging_1.default)('agent');
         LOGGER.info(`Initializing Agent for ${(0, os_1.hostname)()}...`);
         LOGGER.info('Preparing rules...');
         const DECODER = yield (0, decoder_1.initDecoder)(LOGGER);
+        LOGGER.info('Preparing Watchers...');
+        let WATCHERS_CONFIG = yield (0, config_1.readConfig)('watchers');
+        WATCHERS_CONFIG = WATCHERS_CONFIG.filter(watcher => watcher.enabled);
         LOGGER.info('Preparing Actions...');
         const ACTIONS = yield (0, action_1.action)();
+        let WATCHER_PLUGINS = [];
         WATCHERS_CONFIG.forEach((module) => __awaiter(this, void 0, void 0, function* () {
-            if (module.enabled) {
-                const props = {
-                    logger: LOGGER,
-                    options: module.options,
-                    next: (props) => __awaiter(this, void 0, void 0, function* () {
-                        const { description, data } = props;
-                        const decode = yield DECODER.decode(description);
-                        if (decode.length > 0) {
-                            const actionProps = {
-                                hostname: `${(0, os_1.hostname)()}`,
-                                full_log: description,
-                                origin: data,
-                                groups: decode,
-                                logger: LOGGER,
-                            };
-                            yield ACTIONS(actionProps);
-                        }
-                    }),
-                };
-                try {
-                    const WATCHER_MAIN = yield Promise.resolve().then(() => __importStar(require(`../watchers/${module.watcher}`)));
-                    LOGGER.info(`Starting Watcher [${module.watcher}] for [${module.name}]`);
-                    yield WATCHER_MAIN.default(props);
-                }
-                catch (error) {
-                    LOGGER.error(`${error}`);
-                }
+            const WATCHER_LOGGER = yield (0, logging_1.default)('watchers', `Watcher: ${module.name}`);
+            const props = {
+                logger: WATCHER_LOGGER,
+                options: module.options,
+                next: (props) => __awaiter(this, void 0, void 0, function* () {
+                    const { description, data } = props;
+                    const decode = yield DECODER.decode(description);
+                    if (decode.length > 0) {
+                        const actionProps = {
+                            hostname: `${(0, os_1.hostname)()}`,
+                            full_log: description,
+                            origin: data,
+                            groups: decode,
+                        };
+                        yield ACTIONS(actionProps);
+                    }
+                }),
+            };
+            try {
+                const WATCHER_MAIN = yield Promise.resolve().then(() => __importStar(require(`../watchers/${module.watcher}`)));
+                LOGGER.info(`Preparing Watcher [${module.watcher}] for [${module.name}]`);
+                WATCHER_PLUGINS = [
+                    ...WATCHER_PLUGINS,
+                    WATCHER_MAIN.default(props),
+                ];
+            }
+            catch (error) {
+                LOGGER.error(`${error}`);
             }
         }));
+        Promise.all(WATCHER_PLUGINS);
     });
 }
 exports.default = default_1;
