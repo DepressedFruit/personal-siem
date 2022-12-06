@@ -1,5 +1,5 @@
 import { exec } from 'child_process';
-import { createReadStream, fstat, watch } from 'fs';
+import { createReadStream, fstat, watch, existsSync } from 'fs';
 // import { watch } from 'fs/promises';
 import readline from 'readline';
 
@@ -21,7 +21,7 @@ async function countFileLines(file: string): Promise<number> {
             for(i = 0; i < chunk.length; i++) {
                 if('\n'.charCodeAt(0) === chunk[i]) count++;
             }
-        }).on('end', () => resolve(count + 1));
+        }).on('end', () => resolve(count));
     });
 }
 
@@ -35,6 +35,8 @@ export default async function({
 }: LogFilePluginProps): Promise<void> {
     const { file } = options;
     try {
+        if(!existsSync(file)) throw new Error(`${file} does not exist.`);
+
         let currentLines: number = await countFileLines(file);
         let timeoutDebounce: ReturnType<typeof setTimeout> | null;
         watch(file, (event): void => {
@@ -69,6 +71,6 @@ export default async function({
             }
         });
     } catch(err) {
-        logger.error(`log-files ${err}`);
+        logger.error(`${err}`);
     }
 };

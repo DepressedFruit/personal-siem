@@ -13,14 +13,13 @@ export interface Action {
 
 export interface ActionObj {
     action: Action,
-    call: Function,
+    call: (ActionPluginProps) => Promise<void>,
 }
 export interface ActionProps {
     hostname: string,
     full_log: string,
     origin: Object | string
-    groups: DecodedGroups[]
-    logger: LoggingFunction,
+    groups: DecodedGroups[],
 };
 
 export interface ProcessActionProps {
